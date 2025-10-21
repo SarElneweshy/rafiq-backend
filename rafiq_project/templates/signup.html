@@ -1,0 +1,140 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sign up — RAFIQ</title>
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+
+</head>
+<body>
+
+<main class="card">
+  <h1>Create Account</h1>
+
+  <form id="signup-form" class="form" autocomplete="off" method="POST">
+    {% csrf_token %}
+
+    <div class="row">
+      <label for="first_name">First name</label>
+      <input id="first_name" name="first_name" required>
+    </div>
+
+    <div class="row">
+      <label for="last_name">Last name</label>
+      <input id="last_name" name="last_name" required>
+    </div>
+
+    <div class="row">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" required>
+    </div>
+
+    <div class="row">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" required minlength="8">
+    </div>
+
+    <button type="submit" class="btn">Sign up</button>
+
+    <div id="msg" class="msg"></div>
+  </form>
+
+  <p class="small">
+    Already have an account?
+    <a href="{% url 'login_page' %}" class="btn-link">Sign in</a>
+  </p>
+</main>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('signup-form');
+  const msg  = document.getElementById('msg');
+
+  // ✅ Get CSRF token from cookies
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  const csrftoken = getCookie('csrftoken');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.textContent = '';
+    msg.classList.remove('success', 'error');
+
+    // 📝 Collect form data
+    const body = {
+      email: form.email.value.trim(),
+      first_name: form.first_name.value.trim(),
+      last_name: form.last_name.value.trim(),
+      password: form.password.value
+    };
+
+    try {
+      // 📤 Send sign-up request to backend
+      const res = await fetch('/api/accounts/signup/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
+        },
+        credentials: 'same-origin',
+        body: JSON.stringify(body)
+      });
+
+      // 🧾 Parse JSON safely
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        // ❌ Handle validation or server errors
+        console.log('Sign-up error:', data);
+        if (data.detail) {
+          msg.textContent = data.detail;
+        } else {
+          const errors = [];
+          for (const key in data) {
+            errors.push(`${key}: ${Array.isArray(data[key]) ? data[key].join(', ') : data[key]}`);
+          }
+          msg.textContent = errors.join(' | ');
+        }
+        msg.classList.add('error');
+        return;
+      }
+
+      // ✅ Success — store token and user info
+      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      msg.textContent = '🎉 Account created successfully!';
+      msg.classList.add('success');
+
+      // // 🔁 Optional redirect after 2 seconds
+      // setTimeout(() => {
+      //   window.location.href = '/templates/profile.html';
+      // }, 2000);
+
+    } catch (err) {
+      console.error('Network or JS error:', err);
+      msg.textContent = err.message || 'Sign up failed. Please try again.';
+      msg.classList.add('error');
+    }
+  });
+});
+</script>
+
+
+</body>
+</html>
