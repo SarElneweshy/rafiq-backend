@@ -1,0 +1,1 @@
+web: gunicorn rafiq_project.rafiq_project.wsgi
