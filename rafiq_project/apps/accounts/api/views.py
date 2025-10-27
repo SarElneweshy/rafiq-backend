@@ -5,16 +5,26 @@ from rest_framework.authtoken.models import Token
 from .serializers import RegisterSerializer, UserSerializer
 from django.contrib.auth import authenticate
 
+from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import send_mail
+from django.conf import settings
+
+from .serializers import RequestPasswordResetSerializer, SetNewPasswordSerializer
+
+
+
 class RegisterAPIView(APIView):
     permission_classes = []  # allow any
     authentication_classes = []
     
-    # Validate and create a new user
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        token, _ = Token.objects.get_or_create(user=user)# Generate auth token for the created user
+        token, _ = Token.objects.get_or_create(user=user)  # Generate auth token for the created user
         data = {
             "token": token.key,
             "user": UserSerializer(user).data
@@ -37,37 +47,13 @@ class LoginAPIView(APIView):
 
         token, _ = Token.objects.get_or_create(user=user)
         return Response({'token': token.key})
-    
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-# accounts/api/views.py
-from django.contrib.auth import get_user_model
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
-from django.core.mail import send_mail
-from django.conf import settings
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-
-from .serializers import RequestPasswordResetSerializer, SetNewPasswordSerializer
 
 User = get_user_model()
 token_generator = PasswordResetTokenGenerator()
+
 
 class RequestPasswordResetAPIView(APIView):
     permission_classes = []  
@@ -100,10 +86,9 @@ class SetNewPasswordAPIView(APIView):
         serializer = SetNewPasswordSerializer(data=request.data)
 
         if serializer.is_valid():
-                serializer.save(uidb64=uidb64, token=token)
-                return Response(
-                    {"detail": "Password has been reset successfully."},
-                    status=status.HTTP_200_OK
-                )
+            serializer.save(uidb64=uidb64, token=token)
+            return Response(
+                {"detail": "Password has been reset successfully."},
+                status=status.HTTP_200_OK
+            )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
