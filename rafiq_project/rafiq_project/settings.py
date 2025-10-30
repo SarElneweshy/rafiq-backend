@@ -140,5 +140,5 @@ EMAIL_HOST_USER = "rafiqspprt@gmail.com"
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")       
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-FRONTEND_URL = "http://127.0.0.1:8000"
+FRONTEND_URL = "Rafiq-backend-env-2.eba-meb9bypv.eu-north-1.elasticbeanstalk.com"
 
