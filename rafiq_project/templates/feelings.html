@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feelings Tracker</title>
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}" />
+</head>
+<body>
+  <div class="card">
+    <h1>My Feelings</h1>
+    <div id="feelings-list"></div>
+
+    <form id="feeling-form">
+      <div class="row">
+        <label for="emotion">Emotion</label>
+        <input type="text" id="emotion" name="emotion" required />
+      </div>
+      <div class="row">
+        <label for="reason">Reason</label>
+        <input type="text" id="reason" name="reason" />
+      </div>
+      <button class="btn" type="submit">Add Feeling</button>
+      <div class="msg" id="msg"></div>
+    </form>
+  </div>
+
+  <script>
+    const API_URL = 'http://127.0.0.1:8000/api/feelings/'; // غيّري ده حسب الباك اند
+
+    async function fetchFeelings() {
+      const res = await fetch(API_URL, {
+        headers: { 'Authorization': 'Token ' + localStorage.getItem('token') }
+      });
+      const data = await res.json();
+      const list = document.getElementById('feelings-list');
+      list.innerHTML = data.map(f => `<p><b>${f.emotion}</b> - ${f.reason || ''}</p>`).join('');
+    }
+
+    document.getElementById('feeling-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const emotion = document.getElementById('emotion').value;
+      const reason = document.getElementById('reason').value;
+
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Token ' + localStorage.getItem('token')
+        },
+        body: JSON.stringify({ emotion, reason })
+      });
+
+      const msg = document.getElementById('msg');
+      if (res.ok) {
+        msg.textContent = 'Feeling added!';
+        document.getElementById('feeling-form').reset();
+        fetchFeelings();
+      } else {
+        msg.textContent = 'Error adding feeling';
+      }
+    });
+
+    fetchFeelings();
+  </script>
+</body>
+</html>

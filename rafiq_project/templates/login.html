@@ -91,19 +91,15 @@ document.addEventListener('DOMContentLoaded', function() {
         body: payload.toString()
       });
 
-      // اقرأ الـ body مرة واحدة كـ text ثم حاوِل عمل JSON.parse
       const text = await res.text();
       let json = null;
       try {
         json = text ? JSON.parse(text) : null;
       } catch (parseErr) {
-        // لو مش JSON نحتفظ بالنص الأصلي في متغير text
         json = null;
       }
 
-      // لو طلب غير OK — قرر أي رسالة نعرضها
       if (!res.ok) {
-        // أفضل رسائل ممكن ترجعها API: detail, non_field_errors, أو رسائل حقلية
         const errDetail =
           json?.detail ||
           (json && typeof json === 'object' ? Object.values(json).flat().join(' | ') : text) ||
@@ -111,15 +107,13 @@ document.addEventListener('DOMContentLoaded', function() {
         throw { detail: errDetail };
       }
 
-      // لو وصل هنا، فالـ response ناجح
+      // نجاح تسجيل الدخول
       const token = (json && (json.token || json.key)) || '';
       if (token) {
-        localStorage.setItem('authToken', token);
-      } else {
-        console.warn('Login succeeded but no token in response:', json, text);
+        localStorage.setItem('token', token);
       }
 
-      // محاولة جلب بيانات البروفايل إن وُجد endpoint
+      // جلب بيانات المستخدم إن وُجد endpoint
       if (token) {
         try {
           const profileRes = await fetch('/api/accounts/profile/', {
@@ -133,25 +127,22 @@ document.addEventListener('DOMContentLoaded', function() {
             if (profileJson) {
               localStorage.setItem('user', JSON.stringify(profileJson));
             }
-          } else {
-            console.warn('Profile fetch returned', profileRes.status);
           }
         } catch (pfErr) {
           console.warn('Profile fetch failed:', pfErr);
         }
       }
 
-      msg.textContent = '🎉Signed in successfully — redirecting...';
+      msg.textContent = '🎉 Signed in successfully — redirecting...';
       msg.classList.add('success');
 
-      // Redirect بعد تسجيل الدخول (عدلي المسار حسب حاجتك)
-      // setTimeout(() => {
-      //   window.location.href = '/templates/profile.html';
-      // }, 900);
+      // ✅ تحويل تلقائي لصفحة feelings.html بعد النجاح
+      setTimeout(() => {
+
+      }, 900);        window.location.href = '/feelings/';
 
     } catch (err) {
       console.error('Login error:', err);
-      // "err" ممكن يكون شكل { detail: '...' } أو Error object
       const message = err?.detail || err?.message || 'Login failed. Please check your credentials.';
       msg.textContent = message;
       msg.classList.add('error');

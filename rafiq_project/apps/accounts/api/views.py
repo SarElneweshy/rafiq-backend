@@ -2,17 +2,16 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
-from .serializers import RegisterSerializer, UserSerializer
+from .serializers import RegisterSerializer, UserSerializer, RequestPasswordResetSerializer, SetNewPasswordSerializer
 from django.contrib.auth import authenticate
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 from django.core.mail import send_mail
 from django.conf import settings
 
-from .serializers import RequestPasswordResetSerializer, SetNewPasswordSerializer
 
 
 
@@ -46,9 +45,8 @@ class LoginAPIView(APIView):
             return Response({'detail': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key})
-
-
+        user_data = UserSerializer(user).data
+        return Response({'token': token.key, 'user' : user_data})
 
 
 User = get_user_model()
