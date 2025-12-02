@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Mental Health Test</title>
+    <link rel="stylesheet" href="{% static 'css/general.css' %}">
+</head>
+<body>
+
+<h1>General Mental Health Test</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <!-- 1 - Age -->
+    <div class="form-group full-row">
+        <label>1- How old are you?</label>
+        <input type="number" name="age" min="1" max="100" required>
+    </div>
+
+    <!-- 2 -->
+    <div class="form-group">
+        <label>2- Do you sometimes feel nervous or on edge for no clear reason?</label>
+        <input type="radio" name="feeling_nervous" value="1" required> Yes
+        <input type="radio" name="feeling_nervous" value="0"> No
+    </div>
+
+    <!-- 3 -->
+    <div class="form-group">
+        <label>3- Have you ever had sudden moments where you felt scared or panicked out of nowhere?</label>
+        <input type="radio" name="panic" value="1" required> Yes
+        <input type="radio" name="panic" value="0"> No
+    </div>
+
+    <!-- 4 -->
+    <div class="form-group">
+        <label>4- Do you notice your breathing getting faster when you feel anxious or stressed?</label>
+        <input type="radio" name="breathing_rapidly" value="1" required> Yes
+        <input type="radio" name="breathing_rapidly" value="0"> No
+    </div>
+
+    <!-- 5 -->
+    <div class="form-group">
+        <label>5- Do you tend to sweat a lot when you’re worried or nervous?</label>
+        <input type="radio" name="sweating" value="1" required> Yes
+        <input type="radio" name="sweating" value="0"> No
+    </div>
+
+    <!-- 6 -->
+    <div class="form-group">
+        <label>6- Do you find it hard to focus on things, even when you try?</label>
+        <input type="radio" name="trouble_in_concentration" value="1" required> Yes
+        <input type="radio" name="trouble_in_concentration" value="0"> No
+    </div>
+
+    <!-- 7 -->
+    <div class="form-group">
+        <label>7- Do you often have trouble falling asleep or staying asleep through the night?</label>
+        <input type="radio" name="having_trouble_in_sleeping" value="1" required> Yes
+        <input type="radio" name="having_trouble_in_sleeping" value="0"> No
+    </div>
+
+    <!-- 8 -->
+    <div class="form-group">
+        <label>8- Has stress or your mood made it harder for you to focus on work or school lately?</label>
+        <input type="radio" name="having_trouble_with_work" value="1" required> Yes
+        <input type="radio" name="having_trouble_with_work" value="0"> No
+    </div>
+
+    <!-- 9 -->
+    <div class="form-group">
+        <label>9- Do you ever feel like things won’t get better, no matter what you do?</label>
+        <input type="radio" name="hopelessness" value="1" required> Yes
+        <input type="radio" name="hopelessness" value="0"> No
+    </div>
+
+    <!-- 10 -->
+    <div class="form-group">
+        <label>10- Do you get frustrated or angry more easily than you’d like to?</label>
+        <input type="radio" name="anger" value="1" required> Yes
+        <input type="radio" name="anger" value="0"> No
+    </div>
+
+    <!-- 11 -->
+    <div class="form-group">
+        <label>11- Do you feel like you sometimes overreact to small problems?</label>
+        <input type="radio" name="over_react" value="1" required> Yes
+        <input type="radio" name="over_react" value="0"> No
+    </div>
+
+    <!-- 12 -->
+    <div class="form-group">
+        <label>12- Have your eating habits changed recently — like eating too much or too little?</label>
+        <input type="radio" name="change_in_eating" value="1" required> Yes
+        <input type="radio" name="change_in_eating" value="0"> No
+    </div>
+
+    <!-- 13 -->
+    <div class="form-group">
+        <label>13- Have you ever had thoughts about not wanting to be here anymore?</label>
+        <input type="radio" name="suicidal_thought" value="1" required> Yes
+        <input type="radio" name="suicidal_thought" value="0"> No
+    </div>
+
+    <!-- 14 -->
+    <div class="form-group">
+        <label>14- Do you often feel tired or drained, even when you haven’t done much?</label>
+        <input type="radio" name="feeling_tired" value="1" required> Yes
+        <input type="radio" name="feeling_tired" value="0"> No
+    </div>
+
+    <!-- 15 -->
+    <div class="form-group">
+        <label>15- Do you have someone you trust that you can talk to when you’re feeling low?</label>
+        <input type="radio" name="close_friend" value="1" required> Yes
+        <input type="radio" name="close_friend" value="0"> No
+    </div>
+
+    <!-- 16 -->
+    <div class="form-group">
+        <label>16- Do you ever feel like you spend too much time on social media?</label>
+        <input type="radio" name="social_media_addiction" value="1" required> Yes
+        <input type="radio" name="social_media_addiction" value="0"> No
+    </div>
+
+    <!-- 17 -->
+    <div class="form-group">
+        <label>17- Have you noticed your weight changing recently without a clear reason?</label>
+        <input type="radio" name="weight_gain" value="1" required> Yes
+        <input type="radio" name="weight_gain" value="0"> No
+    </div>
+
+    <!-- 18 -->
+    <div class="form-group">
+        <label>18- Do you prefer spending time alone instead of being around people?</label>
+        <input type="radio" name="introvert" value="1" required> Yes
+        <input type="radio" name="introvert" value="0"> No
+    </div>
+
+    <!-- 19 -->
+    <div class="form-group">
+        <label>19- Do bad memories or stressful thoughts pop up suddenly in your mind?</label>
+        <input type="radio" name="popping_up_stressful_memory" value="1" required> Yes
+        <input type="radio" name="popping_up_stressful_memory" value="0"> No
+    </div>
+
+    <!-- 20 -->
+    <div class="form-group">
+        <label>20- Do you get nightmares that feel stressful or remind you of bad experiences?</label>
+        <input type="radio" name="having_nightmares" value="1" required> Yes
+        <input type="radio" name="having_nightmares" value="0"> No
+    </div>
+
+    <!-- 21 -->
+    <div class="form-group">
+        <label>21- Do you avoid certain people or activities because they make you uncomfortable?</label>
+        <input type="radio" name="avoids_people_or_activities" value="1" required> Yes
+        <input type="radio" name="avoids_people_or_activities" value="0"> No
+    </div>
+
+    <!-- 22 -->
+    <div class="form-group">
+        <label>22- Do you often catch yourself thinking negatively about yourself or life?</label>
+        <input type="radio" name="feeling_negative" value="1" required> Yes
+        <input type="radio" name="feeling_negative" value="0"> No
+    </div>
+
+    <!-- 23 -->
+    <div class="form-group">
+        <label>23- Do you struggle to stay focused on one thing for long?</label>
+        <input type="radio" name="trouble_concentrating" value="1" required> Yes
+        <input type="radio" name="trouble_concentrating" value="0"> No
+    </div>
+
+    <!-- 24 -->
+    <div class="form-group">
+        <label>24- Do you sometimes blame yourself for things that aren’t your fault?</label>
+        <input type="radio" name="blamming_yourself" value="1" required> Yes
+        <input type="radio" name="blamming_yourself" value="0"> No
+    </div>
+
+    <!-- 25 -->
+    <div class="form-group">
+        <label>25- Have you ever seen or heard things that others couldn’t?</label>
+        <input type="radio" name="hallucinations" value="1" required> Yes
+        <input type="radio" name="hallucinations" value="0"> No
+    </div>
+
+    <!-- 26 -->
+    <div class="form-group">
+        <label>26- Do you find yourself repeating certain actions or routines over and over?</label>
+        <input type="radio" name="repetitive_behaviour" value="1" required> Yes
+        <input type="radio" name="repetitive_behaviour" value="0"> No
+    </div>
+
+    <!-- 27 -->
+    <div class="form-group">
+        <label>27- Do you notice your mood or energy changing depending on the season?</label>
+        <input type="radio" name="seasonally" value="1" required> Yes
+        <input type="radio" name="seasonally" value="0"> No
+    </div>
+
+    <!-- 28 -->
+    <div class="form-group">
+        <label>28- Do you sometimes feel full of energy or excitement for no clear reason?</label>
+        <input type="radio" name="increased_energy" value="1" required> Yes
+        <input type="radio" name="increased_energy" value="0"> No
+    </div>
+
+
+    <button type="submit" class="submit-btn">Predict Disorder</button>
+
+</form>
+<div>
+    <h3>{{result}}</h3>
+    </div>
+</body>
+</html>

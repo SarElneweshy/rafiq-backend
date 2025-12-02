@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'apps.accounts.apps.AccountsConfig',
     'apps.feelings.apps.FeelingsConfig',
+    'apps.mental_assessment.apps.MentalAssessmentConfig',
 ]
 
 MIDDLEWARE = [
