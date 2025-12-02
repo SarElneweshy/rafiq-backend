@@ -3,7 +3,7 @@ from .views import FeelingApiView
 from django.urls import path, include
 
 router = DefaultRouter()
-router.register(r"feelings", FeelingApiView, basename="feeling")
+router.register("", FeelingApiView, basename="feeling")
 
 urlpatterns = [
     path("", include(router.urls))
