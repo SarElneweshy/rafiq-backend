@@ -5,8 +5,16 @@ name = "pypi"
 
 [packages]
 django = "*"
+djangorestframework = "*"
+pillow = "*"
+python-dotenv = "*"
+django-storages = "*"
+boto3 = "*"
+psycopg2-binary = "*"
+whitenoise = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.13"
+python_version = "3.11"
+

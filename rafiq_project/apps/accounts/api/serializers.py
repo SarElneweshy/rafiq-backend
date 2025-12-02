@@ -79,3 +79,24 @@ class SetNewPasswordSerializer(serializers.Serializer):
         user.set_password(new_password)
         user.save()
         return user
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    """
+    Serializer for viewing (GET) and updating (PATCH/PUT) user profile and personal info.
+    """
+    class Meta:
+        model = User
+        fields = (
+            'id', 
+            'first_name', 
+            'last_name', 
+            'email', 
+            'phone', 
+            'location', 
+            'date_of_birth',
+            'profile_picture', 
+            'gender',         
+            'username',        
+        )
+        
+        read_only_fields = ('id', 'username')

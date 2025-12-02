@@ -1,8 +1,10 @@
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
-from .serializers import RegisterSerializer, UserSerializer, RequestPasswordResetSerializer, SetNewPasswordSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from .serializers import RegisterSerializer, UserSerializer, RequestPasswordResetSerializer, SetNewPasswordSerializer, UserProfileSerializer
 from django.contrib.auth import authenticate
 
 from django.contrib.auth import get_user_model
@@ -90,3 +92,15 @@ class SetNewPasswordAPIView(APIView):
                 status=status.HTTP_200_OK
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserProfileView(generics.RetrieveUpdateAPIView):
+    """
+    API endpoint to retrieve (GET) the current user's profile and update (PATCH/PUT) it.
+    This handles both Profile Page display and Edit Profile functionality.
+    """
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    serializer_class = UserProfileSerializer
+
+    def get_object(self):
+        return self.request.user

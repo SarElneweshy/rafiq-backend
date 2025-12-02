@@ -2,6 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.crypto import get_random_string
 
+GENDER_CHOICES = (
+    ('M', 'Male'),
+    ('F', 'Female'),
+    ('O', 'Other'),
+)
 
 class CustomUserManager(BaseUserManager):
     use_in_migrations = True
@@ -57,9 +62,25 @@ class CustomUserManager(BaseUserManager):
 
 
 class User(AbstractUser):
+    #profile
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
+    profile_picture = models.ImageField(
+        upload_to='profile_pics/', 
+        null=True, 
+        blank=True
+    )
+    gender = models.CharField(
+        max_length=1, 
+        choices=GENDER_CHOICES, 
+        blank=True, 
+        null=True
+    )
+    #personal information
     email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=15, blank=True, null=True)
+    location = models.CharField(max_length=100, blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
