@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'apps.accounts.apps.AccountsConfig',
     'apps.feelings.apps.FeelingsConfig',
     'storages',
+    'apps.exercises.apps.ExercisesConfig',
+    'apps.mental_assessment.apps.MentalAssessmentConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -67,6 +70,16 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication', 
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    )
+}
 
 WSGI_APPLICATION = 'rafiq_project.wsgi.application'
 
