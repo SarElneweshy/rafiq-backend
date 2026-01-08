@@ -1,9 +1,9 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from ..models import GeneralTestResult
-from .serializers import GeneralTestResultSerializer
-from ..utils import FEATURES_NAME, predict_disorder
+from ...models import GeneralTestResult
+from ..serializers.general_serializers import GeneralTestResultSerializer
+from ...utils.general_utils import FEATURES_NAME, predict_disorder
 from rest_framework.authentication import TokenAuthentication
 
 class GeneralTestApiView(APIView):

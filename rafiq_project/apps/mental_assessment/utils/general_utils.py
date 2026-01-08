@@ -8,7 +8,7 @@ try:
     model = joblib.load(MODEL_PATH)
     
 except Exception as e:
-    print("Error loading model:", e)
+    print("Error loading general model:", e)
     model = None
 
 DISORDERS = [
@@ -59,7 +59,7 @@ INFO = {
                 "Post-Traumatic Stress Disorder (PTSD)": {
                     "description": "You may experience flashbacks, nightmares, or anxiety from past trauma.",
                     "suggestions": ["Try grounding techniques", "Seek therapy", "Practice mindfulness"],
-                    "video": "https://youtu.be/LiUnFJ8P4gM?si=1p_ivB984-f8CWAF"
+                    "video": "https://www.youtube.com/watch?v=VDLfVwMSbJ8"
                 },
                 "Sleeping Disorder": {
                     "description": "You may have difficulty sleeping or maintaining sleep quality.",
@@ -69,12 +69,12 @@ INFO = {
                 "Psychotic Depression": {
                     "description": "You may experience depressive thoughts with delusional ideas.",
                     "suggestions": ["Seek professional therapy", "Follow a stable routine", "Reduce stress exposure"],
-                    "video": "https://youtu.be/LiUnFJ8P4gM"
+                    "video": "https://www.youtube.com/watch?v=qKcRUOWYQ9w"
                 },
                 "Eating Disorder": {
                     "description": "You may have an unhealthy relationship with food or body image.",
                     "suggestions": ["Eat balanced meals", "Avoid comparison", "Talk to a counselor"],
-                    "video": "https://youtu.be/LiUnFJ8P4gM?si=1p_ivB984-f8CWAF"
+                    "video": "https://www.youtube.com/watch?v=LiUnFJ8P4gM"
                 },
                 "Attention-Deficit/Hyperactivity Disorder (ADHD)": {
                     "description": "You may have trouble focusing or staying still for long periods.",
@@ -84,12 +84,12 @@ INFO = {
                 "Persistent Depressive Disorder (PDD)": {
                     "description": "You may experience long-term mild depression with low energy or motivation.",
                     "suggestions": ["Follow a daily plan", "Set small goals", "Engage in enjoyable activities"],
-                    "video": "https://youtu.be/sFtP0HWvu0k?si=ejxXUWJJPgLXc0QU"
+                    "video": "https://www.youtube.com/watch?v=LiUnFJ8P4gM"
                 },
                 "Obsessive-Compulsive Disorder (OCD)": {
                     "description": "You may experience repetitive thoughts or actions you feel forced to do.",
                     "suggestions": ["Practice CBT techniques", "Avoid seeking reassurance", "Stick to a routine"],
-                    "video": "https://youtu.be/SNqYG95j_UQ?si=NH_kSHp3Mbf7ZYeS"
+                    "video": "https://www.youtube.com/watch?v=pxWOpGm4d7U"
                     
                 }
 }

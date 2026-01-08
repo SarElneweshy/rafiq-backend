@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'storages',
     'apps.exercises.apps.ExercisesConfig',
     'apps.mental_assessment.apps.MentalAssessmentConfig',
+    'apps.doctors.apps.DoctorsConfig',
 
 ]
 
@@ -94,6 +95,7 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
     }
 }
+
 
 AWS_STORAGE_BUCKET_NAME = "elasticbeanstalk-eu-north-1-255404879187" 
 AWS_S3_REGION_NAME = "eu-north-1"  
