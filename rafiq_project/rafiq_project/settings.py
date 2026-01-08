@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'storages',
     'apps.exercises.apps.ExercisesConfig',
     'apps.mental_assessment.apps.MentalAssessmentConfig',
-    'apps.doctors.apps.DoctorsConfig',
+    # 'apps.doctors.apps.DoctorsConfig',
 
 ]
 
