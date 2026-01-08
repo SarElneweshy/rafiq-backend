@@ -13,8 +13,7 @@ class Disorder(models.Model):
     
 class Exercise(models.Model):
     disorder = models.ForeignKey(
-        Disorder, on_delete=models.CASCADE, related_name='exercises'
-    )
+        Disorder, on_delete=models.CASCADE, related_name='exercises')
     title = models.CharField(max_length=255)
     short_desc = models.TextField()
     detailed_desc = models.TextField()

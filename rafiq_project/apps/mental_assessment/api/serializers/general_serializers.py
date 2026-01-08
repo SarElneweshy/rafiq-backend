@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import GeneralTestResult
+from ...models import GeneralTestResult
 
 class GeneralTestResultSerializer(serializers.ModelSerializer):
     class Meta:
