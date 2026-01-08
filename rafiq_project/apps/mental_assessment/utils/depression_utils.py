@@ -3,6 +3,7 @@ import joblib
 import pandas as pd
 
 MODEL_PATH = os.path.join("ml_models", "depression_model.pkl")
+SCALER_PATH = os.path.join("ml_models", "scaler.pkl")
 
 try:
     model = joblib.load(MODEL_PATH)
@@ -10,6 +11,11 @@ except Exception as e:
     print("Error loading depression model:", e)
     model = None
 
+try:
+    scaler = joblib.load(SCALER_PATH)
+except Exception as e:
+    print("Error loading scaler:", e)
+    scaler = None
 
 FEATURE_ORDER = [
     "gender",
@@ -23,7 +29,7 @@ FEATURE_ORDER = [
     "financial_stress",
     "family_history"
 ]
-  # in ml model #
+
 FEATURES_NAME = [
     "Gender",
     "Age",
@@ -37,38 +43,35 @@ FEATURES_NAME = [
     "Family History of Mental Illness"
 ]
 
+NUMERIC_COLS = ['Age', 'Work Pressure', 'Job Satisfaction', 'Work Hours', 'Financial Stress']
+
 INFO = {
     "Yes": {
         "description": "You may be showing signs of depression.",
-        "suggestions": ["Try journaling", 
-                "Talk to a mental health professional","Do light exercise", "Follow a daily routine"],
+        "suggestions": ["Try journaling", "Talk to a mental health professional",
+                        "Do light exercise", "Follow a daily routine"],
         "video": "https://www.youtube.com/watch?v=qKcRUOWYQ9w"
-        
     },
     "No": {
-        "description": "Your mind feels calm and balanced. You seem to be in a peaceful mental state. You handle situations calmly and give yourself time to think and breathe. Keep nurturing that balance — it’s your real strength. Maintain your relaxation routine and remember — peace of mind needs care, just like your body.",
+        "description": "Your mind feels calm and balanced. Keep nurturing that balance — it’s your real strength.",
         "suggestions": ["Keep up the good work", "Maintain a healthy lifestyle"],
         "video": ""
     }
 }
 
 def predict_depression(validated_data: dict):
-    """
-    validated_data: dict coming from serializer
-    """
-
-    if model is None:
+    if model is None or scaler is None:
         return {
             "depression": "Unknown",
-            "description": "Model is not loaded.",
+            "description": "Model or scaler is not loaded.",
             "suggestions": [],
             "video": ""
         }
 
-    # Arrange answers in the order expected by the model #
     ordered_answers = [validated_data[key] for key in FEATURE_ORDER]
-
     df = pd.DataFrame([ordered_answers], columns=FEATURES_NAME)
+
+    df[NUMERIC_COLS] = scaler.transform(df[NUMERIC_COLS])
 
     try:
         pred_num = model.predict(df)[0]
