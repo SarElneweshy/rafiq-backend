@@ -13,6 +13,7 @@ urlpatterns = [
     path("api/feelings/", include("apps.feelings.api.urls")),
     path("api/exercises/", include("apps.exercises.api.urls")),
     path("api/assessments/", include("apps.mental_assessment.api.urls")),
+    path("api/journals/", include("apps.journals.api.urls")),
     # path("api/doctors/", include("apps.doctors.api.urls")),
 ]
 
