@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # 'apps.doctors.apps.DoctorsConfig',
 
 
+    'apps.notifications.apps.NotificationsConfig',
 ]
 
 MIDDLEWARE = [
