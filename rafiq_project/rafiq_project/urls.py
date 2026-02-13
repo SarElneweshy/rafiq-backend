@@ -15,5 +15,6 @@ urlpatterns = [
     path("api/assessments/", include("apps.mental_assessment.api.urls")),
     path('api/notifications/', include('apps.notifications.api.urls')),
     # path("api/doctors/", include("apps.doctors.api.urls")),
+    path("api/journals/", include("apps.journals.api.urls")),
 ]
 
