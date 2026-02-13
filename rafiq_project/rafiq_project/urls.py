@@ -7,9 +7,13 @@ urlpatterns = [
     path("accounts/", include("apps.accounts.urls")),
     path("feelings/", include("apps.feelings.urls")),
 
+
     # API
     path("api/accounts/", include("apps.accounts.api.urls")),
     path("api/feelings/", include("apps.feelings.api.urls")),
-    # path("api/assessments/", include("apps.mental_assessments.api.urls")),
+    path("api/exercises/", include("apps.exercises.api.urls")),
+    path("api/assessments/", include("apps.mental_assessment.api.urls")),
+    path('api/notifications/', include('apps.notifications.api.urls')),
+    # path("api/doctors/", include("apps.doctors.api.urls")),
 ]
 
