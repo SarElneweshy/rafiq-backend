@@ -15,6 +15,7 @@ load_dotenv(BASE_DIR / '.env')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'apps.exercises.apps.ExercisesConfig',
     'apps.mental_assessment.apps.MentalAssessmentConfig',
     'apps.notifications.apps.NotificationsConfig',
+    'apps.journals.apps.JournalsConfig',
 ]
 
 MIDDLEWARE = [
@@ -168,3 +170,4 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 FRONTEND_URL = "Rafiq-backend-env-2.eba-meb9bypv.eu-north-1.elasticbeanstalk.com"
 
+AI_SERVICE_URL = "http://emotion_model:5000/predict"
