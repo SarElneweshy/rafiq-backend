@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'storages',
     'apps.exercises.apps.ExercisesConfig',
     'apps.mental_assessment.apps.MentalAssessmentConfig',
-    'apps.notifications.apps.NotificationsConfig',
     'apps.journals.apps.JournalsConfig',
 ]
 
