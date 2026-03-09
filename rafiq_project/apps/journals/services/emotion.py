@@ -27,7 +27,6 @@ def analyze_emotion(text):
             return [], DEFAULT_EMOTION
 
         data = res.json()
-        print(f"DEBUG: Data from Flask: {data}")
         return data["emotions"], data["dominant_emotion"]
 
     except LangDetectException:
