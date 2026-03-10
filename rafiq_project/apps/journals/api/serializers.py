@@ -17,5 +17,5 @@ class JournalSerializer(serializers.ModelSerializer):
         if len(words) < 5:
             raise serializers.ValidationError("Journal entry must be at least 5 words.")
         if len(value) > 10000:
-            raise serializers.ValidationError("Journal too long")
+            raise serializers.ValidationError("Your journal entry is too long. ")
         return value

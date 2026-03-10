@@ -1,5 +1,8 @@
-from pathlib import Path
 import os
+from pathlib import Path
+#remove tensorflow warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     'apps.exercises.apps.ExercisesConfig',
     'apps.mental_assessment.apps.MentalAssessmentConfig',
     'apps.journals.apps.JournalsConfig',
+    
 ]
 
 MIDDLEWARE = [
@@ -169,4 +173,5 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 FRONTEND_URL = "Rafiq-backend-env-2.eba-meb9bypv.eu-north-1.elasticbeanstalk.com"
 
-AI_SERVICE_URL = "http://emotion_model:5000/predict"
+# AI_SERVICE_URL = "http://emotion_model:5000/predict"
+
