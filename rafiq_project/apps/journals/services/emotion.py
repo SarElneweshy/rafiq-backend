@@ -22,7 +22,7 @@ except Exception as e:
 
 DEFAULT_EMOTION = "neutral"
 
-LABEL_MAP = {0: 'sadness', 1: 'joy', 2: 'love', 3: 'anger', 4: 'fear', 5: 'surprise'}
+LABEL_MAP = {0: 'Sadness', 1: 'Joy', 2: 'Love', 3: 'Anger', 4: 'Fear', 5: 'Surprise'}
 
 def analyze_emotion(text):
     if not text or not text.strip() or model is None:
@@ -34,13 +34,24 @@ def analyze_emotion(text):
         if lang != 'en':
             return {}, "Unsupported Language"
 
-        sequence = tokenizer.texts_to_sequences([text])
-        padded = pad_sequences(sequence, maxlen=150, padding='post')
+        words = text.split()
+        chunk_size = 120 
+        chunks = [" ".join(words[i:i + chunk_size]) for i in range(0, len(words), chunk_size)]
         
-        prediction = model.predict(padded)[0]
+        all_chunk_predictions = []
+
+        for chunk in chunks:
+            sequence = tokenizer.texts_to_sequences([chunk])
+
+            padded = pad_sequences(sequence, maxlen=150, padding='post', truncating='post')
+
+            prediction = model.predict(padded, verbose=0)[0]
+            all_chunk_predictions.append(prediction)
+
+        final_prediction = np.mean(all_chunk_predictions, axis=0)
         
-        emotions_dict = {LABEL_MAP[i]: float(prediction[i]) for i in range(len(LABEL_MAP))}
-        dominant_emotion = LABEL_MAP[np.argmax(prediction)]
+        emotions_dict = {LABEL_MAP[i]: float(final_prediction[i]) for i in range(len(LABEL_MAP))}
+        dominant_emotion = LABEL_MAP[np.argmax(final_prediction)]
 
         return emotions_dict, dominant_emotion
 
