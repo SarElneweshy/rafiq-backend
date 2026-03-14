@@ -1,14 +1,7 @@
 from django.urls import path
-from .views import (
-    VoiceJournalAPIView,
-    SaveVoiceJournalAPIView,
-    TextJournalAPIView,
-    JournalListAPIView
-)
+from .views import JournalListCreateAPIView, JournalRetrieveUpdateDeleteAPIView
 
 urlpatterns = [
-    path("voice/", VoiceJournalAPIView.as_view()),
-    path("voice/save/", SaveVoiceJournalAPIView.as_view()),
-    path("text/", TextJournalAPIView.as_view()),
-    path("history/", JournalListAPIView.as_view()),
+    path('', JournalListCreateAPIView.as_view(), name='journals-list-create'),
+    path('<int:id>/', JournalRetrieveUpdateDeleteAPIView.as_view(), name='journals-rud'),
 ]

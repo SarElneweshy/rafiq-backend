@@ -1,5 +1,8 @@
-from pathlib import Path
 import os
+from pathlib import Path
+#remove tensorflow warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,6 +17,7 @@ load_dotenv(BASE_DIR / '.env')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
@@ -40,8 +44,8 @@ INSTALLED_APPS = [
     'storages',
     'apps.exercises.apps.ExercisesConfig',
     'apps.mental_assessment.apps.MentalAssessmentConfig',
-    'apps.notifications.apps.NotificationsConfig',
     'apps.journals.apps.JournalsConfig',
+    
 ]
 
 MIDDLEWARE = [
@@ -168,4 +172,6 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 FRONTEND_URL = "Rafiq-backend-env-2.eba-meb9bypv.eu-north-1.elasticbeanstalk.com"
+
+# AI_SERVICE_URL = "http://emotion_model:5000/predict"
 

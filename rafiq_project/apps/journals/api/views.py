@@ -1,97 +1,100 @@
-import uuid
-import os
-import tempfile
-from rest_framework.views import APIView
+from rest_framework import generics, permissions,status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from ..models import JournalEntry
-from .serializers import VoiceJournalSerializer,TextJournalSerializer,SaveVoiceJournalSerializer,JournalEntrySerializer
+from rest_framework.exceptions import ValidationError
+from apps.journals.models import Journal
+from .serializers import JournalSerializer
+from apps.journals.services.emotion import analyze_emotion
 
-from ..services.whisper_service import transcribe_audio_file
+class JournalListCreateAPIView(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = JournalSerializer
 
-class VoiceJournalAPIView(APIView):
-    permission_classes = [AllowAny]
+    def get_queryset(self): 
+        return Journal.objects.filter(user=self.request.user).order_by('-created_at')
+    
+    #------- create journal -------#
 
-    def post(self, request):
-        serializer = VoiceJournalSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        audio = serializer.validated_data["content_voice"]
+    def perform_create(self, serializer):
+        content = self.request.data.get("content", "").strip()
+        emotions, dominant = analyze_emotion(content)
 
-        if audio.size > 5*1024*1024:
-            return Response({"error": "File too large. Max 5MB."}, status=400)
-        if not audio.name.endswith((".wav",".mp3",".m4a")):
-            return Response({"error": "Unsupported file format."}, status=400)
-
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-            for chunk in audio.chunks():
-                tmp.write(chunk)
-            tmp_path = tmp.name
-
-        try:
-            text, detected_lang = transcribe_audio_file(tmp_path)
-            return Response({
-                "transcript": text, "detected_language": detected_lang
-                })
-            
-        finally:
-            os.remove(tmp_path)
-
-class SaveVoiceJournalAPIView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        if not request.user.is_authenticated:
-            return Response(
-                {"error": "Authentication required"},
-                status=401
-            )
-        serializer = SaveVoiceJournalSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        entry = JournalEntry.objects.create(
-            user=request.user,
-            journal_type="voice",
-            content_text=serializer.validated_data["content_text"],
-            detected_language=serializer.validated_data.get("detected_language"),
-        )
-
-        if "content_voice" in serializer.validated_data:
-            entry.content_voice.save(
-                serializer.validated_data["content_voice"].name,
-                serializer.validated_data["content_voice"]
-            )
-
-        return Response({"message": "Journal saved successfully"}, status=201)
-
-class TextJournalAPIView(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        serializer = TextJournalSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        text = serializer.validated_data["content_text"]
-        
-
-        if request.user.is_authenticated:
-          
-            entry = JournalEntry.objects.create(
-                user=request.user,
-                journal_type="text",
-                content_text=text,
-            )
-            return Response({
-                "message": "Text journal saved successfully"
-            }, status=201)
-        else:
-            
-            return Response({
-                "text": text
+        if dominant == "Unsupported Language":
+            raise ValidationError({
+                "language_error": "This language is not supported. Please write in English."
             })
 
-class JournalListAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+        self.journal = serializer.save(
+            user=self.request.user,
+            language="en",
+            emotions=emotions,
+            dominant_emotion=dominant
+        )
 
-    def get(self, request):
-        journals = JournalEntry.objects.filter(user=request.user)
-        serializer = JournalEntrySerializer(journals, many=True, context={"request": request})
-        return Response({"message": "Your journals fetched successfully", "data": serializer.data})
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+
+        return Response({
+            "message": "Your journal saved successfully ",
+            "dominant_emotion": self.journal.dominant_emotion
+        }, status=status.HTTP_201_CREATED)
+
+class JournalRetrieveUpdateDeleteAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = JournalSerializer
+    lookup_field = "id"
+
+    def get_queryset(self):
+        return Journal.objects.filter(user=self.request.user)
+    
+    #------ retrieve journal -------#
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        return Response({
+            "message": "Journal fetched successfully ",
+            "data": self.get_serializer(instance).data
+        })
+    
+    #------ update journal -------#
+
+    def perform_update(self, serializer):
+        old_content = serializer.instance.content
+        new_content = self.request.data.get(
+            "content",
+            old_content
+        ).strip()
+
+        if new_content != old_content:
+            emotions, dominant = analyze_emotion(new_content)
+            if dominant == "Unsupported Language":
+                raise ValidationError({
+                    "language_error": "Update failed. Only English is supported."
+                })
+        else:
+            emotions = serializer.instance.emotions
+            dominant = serializer.instance.dominant_emotion
+
+        self.journal = serializer.save(
+            content=new_content,
+            emotions=emotions,
+            dominant_emotion=dominant
+        )
+
+    def update(self, request, *args, **kwargs):
+        response = super().update(request, *args, **kwargs)
+
+        return Response({
+            "message": "Journal updated successfully ",
+            "dominant_emotion": self.journal.dominant_emotion
+        })
+    
+    #------ delete journal -------#
+    
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+
+        return Response({
+            "message": "Journal deleted successfully "
+        }, status=status.HTTP_204_NO_CONTENT)
+    

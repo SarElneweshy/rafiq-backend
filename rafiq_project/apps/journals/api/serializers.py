@@ -1,25 +1,21 @@
 from rest_framework import serializers
-from ..models import JournalEntry
+from apps.journals.models import Journal
 
-class VoiceJournalSerializer(serializers.Serializer):
-    content_voice = serializers.FileField()
-
-class TextJournalSerializer(serializers.Serializer):
-    content_text = serializers.CharField()
-
-class SaveVoiceJournalSerializer(serializers.Serializer):
-    content_text = serializers.CharField()
-    detected_language = serializers.CharField(required=False)
-    content_voice = serializers.FileField(required=False)
-
-class JournalEntrySerializer(serializers.ModelSerializer):
-
+class JournalSerializer(serializers.ModelSerializer):
     class Meta:
-        model = JournalEntry
+        model = Journal
         fields = [
             "id",
-            "journal_type",
-            "content_text",
-            "detected_language",
-            "created_at",
+            "content",
+            "dominant_emotion",
+            
         ]
+        read_only_fields = ["dominant_emotion", "created_at","language"]
+
+    def validate_content(self, value):
+        words = value.strip().split()
+        if len(words) < 5:
+            raise serializers.ValidationError("Journal entry must be at least 5 words.")
+        if len(value) > 10000:
+            raise serializers.ValidationError("Your journal entry is too long. ")
+        return value
