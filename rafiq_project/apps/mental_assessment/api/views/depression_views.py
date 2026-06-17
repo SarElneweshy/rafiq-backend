@@ -19,7 +19,6 @@ class DepressionTestApiView(APIView):
         result = predict_depression(validated_data)
 
         response_data = {
-            "depression": result["depression"],
             "description": result["description"],
             "suggestions": result["suggestions"],
             "video": result["video"],
@@ -27,7 +26,7 @@ class DepressionTestApiView(APIView):
         if request.user.is_authenticated:
             DepressionTestResult.objects.create(
                 user=request.user,
-                depression=result["depression"],
+
                 description=result["description"],
                 suggestions=result["suggestions"],
                 video_url=result["video"],

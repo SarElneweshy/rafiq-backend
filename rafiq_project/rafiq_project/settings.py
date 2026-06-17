@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.exercises.apps.ExercisesConfig',
     'apps.mental_assessment.apps.MentalAssessmentConfig',
     'apps.journals.apps.JournalsConfig',
+    'apps.doctors.apps.DoctorsConfig',
     
 ]
 
@@ -83,7 +84,11 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    )
+    ),
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 15,
+    
 }
 
 WSGI_APPLICATION = 'rafiq_project.wsgi.application'
