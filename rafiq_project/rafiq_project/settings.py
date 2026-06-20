@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.exercises.apps.ExercisesConfig',
     'apps.mental_assessment.apps.MentalAssessmentConfig',
     'apps.journals.apps.JournalsConfig',
+    'apps.chatbot.apps.ChatbotConfig',
     
 ]
 
