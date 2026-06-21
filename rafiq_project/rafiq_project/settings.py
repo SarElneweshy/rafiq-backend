@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'apps.mental_assessment.apps.MentalAssessmentConfig',
     'apps.journals.apps.JournalsConfig',
     'apps.chatbot.apps.ChatbotConfig',
-    
+    'apps.doctors.apps.DoctorsConfig',
 ]
 
 MIDDLEWARE = [
@@ -84,7 +84,10 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    )
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    
 }
 
 WSGI_APPLICATION = 'rafiq_project.wsgi.application'
