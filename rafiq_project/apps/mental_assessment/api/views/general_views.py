@@ -31,18 +31,26 @@ class GeneralTestApiView(APIView):
                 answers_numeric.append(1 if str(val).lower() in ["yes", "true", "1"] else 0)
 
         result = predict_disorder(answers_numeric)
+        result_id = None
 
         if request.user.is_authenticated:
             GeneralTestResult.objects.create(
-                user=request.user,
-                predicted_disorder=result["predicted_disorder"],
-                description=result["description"],
-                suggestions=result["suggestions"],
-                video_url=result["video"],
-                answers=answers_numeric
-            )
+                    user=request.user,
+                    predicted_disorder=result["predicted_disorder"],
+                    description=result["description"],
+                    suggestions=result["suggestions"],
+                    video_url=result["video"],
+                    answers=answers_numeric
+                )
+        response_data = {
+            # "predicted_disorder": result["predicted_disorder"],
+            "title": result["title"],             
+            "description": result["description"], 
+            "suggestions": result["suggestions"], 
+            "video": result["video"]            
+        }
+        return Response(response_data, status=200)
 
-        return Response(result)
 
 class TestResultsApiView(APIView):
     permission_classes = [IsAuthenticated]

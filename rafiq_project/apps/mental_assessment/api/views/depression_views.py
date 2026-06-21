@@ -15,38 +15,28 @@ class DepressionTestApiView(APIView):
             return Response(serializer.errors, status=400)
 
         validated_data = serializer.validated_data
-
         result = predict_depression(validated_data)
 
-        response_data = {
-            "depression": result["depression"],
-            "description": result["description"],
-            "suggestions": result["suggestions"],
-            "video": result["video"],
-        }
-        if request.user.is_authenticated:
-            DepressionTestResult.objects.create(
-                user=request.user,
-                depression=result["depression"],
-                description=result["description"],
-                suggestions=result["suggestions"],
-                video_url=result["video"],
-                answers=validated_data
-            )
+        shared_url = None
 
+        if request.user and request.user.is_authenticated:
+            try:
+                saved_result = DepressionTestResult.objects.create(
+                    user=request.user,
+                  depression=result.get("depression", "Unknown"),                   description=result.get("description", ""),
+                    answers=validated_data
+                )
+                shared_url = f"https://rafiq-mentalhealth.com/share/depression/{saved_result.id}/"
+            except Exception as database_error:
+               print(f"Database save error: {database_error}")   
+
+        response_data = {
+            # "depression": result["depression"],
+            "title": result["title"],
+            "subtitle": result["subtitle"],
+            "description": result["description"],
+            "bottom_text": result["bottom_text"],
+            "share_url": shared_url
+        }
         return Response(response_data, status=200)
         
-        # if request.user.is_authenticated:
-        #     test = DepressionTestResult.objects.create(
-        #         user=request.user,
-        #         depression=result["depression"],
-        #         description=result["description"],
-        #         suggestions=result["suggestions"],
-        #         video_url=result["video"],
-        #         answers=validated_data
-        #     )
-        #     response_data["share_url"] = f"https://yourfrontend.com/result/{test.id}"
-        # else:
-        #     response_data["share_url"] = None
-
-        # return Response(response_data, status=200)

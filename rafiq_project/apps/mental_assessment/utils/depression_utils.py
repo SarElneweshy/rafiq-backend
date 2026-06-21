@@ -47,15 +47,17 @@ NUMERIC_COLS = ['Age', 'Work Pressure', 'Job Satisfaction', 'Work Hours', 'Finan
 
 INFO = {
     "Yes": {
-        "description": "You may be showing signs of depression.",
-        "suggestions": ["Try journaling", "Talk to a mental health professional",
-                        "Do light exercise", "Follow a daily routine"],
-        "video": "https://www.youtube.com/watch?v=qKcRUOWYQ9w"
+        "title": "Your Mind Needs Extra Care Right Now",
+        "subtitle": "Your results indicate signs of depression",
+        "description": "You may be experiencing persistent sadness, low energy, or a loss of interest in activities you once enjoyed.",
+        "bottom_text": "Remember, seeking help is a sign of strength. Taking one small step today can make a positive difference in your journey toward feeling better.",
+
     },
     "No": {
-        "description": "Your mind feels calm and balanced. Keep nurturing that balance — it’s your real strength.",
-        "suggestions": ["Keep up the good work", "Maintain a healthy lifestyle"],
-        "video": ""
+        "title": "Your Mind Feels Calm and Balanced",
+        "subtitle": "You seem to be in a peaceful mental state",
+        "description": "You handle situations calmly and give yourself time to think and breathe. Keep nurturing that balance — it’s your real strength.",
+        "bottom_text": "Maintain your relaxation routine and remember – peace of mind needs care, just like your body.",
     }
 }
 
@@ -63,31 +65,33 @@ def predict_depression(validated_data: dict):
     if model is None or scaler is None:
         return {
             "depression": "Unknown",
+            "title": "Model error", 
+            "subtitle": "Configuration",          
             "description": "Model or scaler is not loaded.",
-            "suggestions": [],
-            "video": ""
+            "bottom_text": ""
         }
 
     ordered_answers = [validated_data[key] for key in FEATURE_ORDER]
     df = pd.DataFrame([ordered_answers], columns=FEATURES_NAME)
 
-    df[NUMERIC_COLS] = scaler.transform(df[NUMERIC_COLS])
-
     try:
+        df[NUMERIC_COLS] = scaler.transform(df[NUMERIC_COLS])
         pred_num = model.predict(df)[0]
     except Exception as e:
         return {
             "depression": "Unknown",
-            "description": f"Prediction error: {e}",
-            "suggestions": [],
-            "video": ""
+            "title": "Prediction Error",
+            "subtitle": "Error occurs during inference", "description": f"Prediction error: {e}",
+            "bottom_text": ""
         }
 
     pred_label = "Yes" if pred_num == 1 else "No"
+    target_info = INFO[pred_label]
 
     return {
         "depression": pred_label,
-        "description": INFO[pred_label]["description"],
-        "suggestions": INFO[pred_label]["suggestions"],
-        "video": INFO[pred_label]["video"]
+        "title": target_info["title"],
+        "subtitle": target_info["subtitle"],
+        "description": target_info["description"],
+        "bottom_text": target_info["bottom_text"],
     }
