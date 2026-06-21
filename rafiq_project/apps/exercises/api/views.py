@@ -8,8 +8,9 @@ from .serializers import (
 class DisorderListAPIView(generics.ListAPIView):
     queryset = Disorder.objects.all()
     serializer_class = DisorderListSerializer
+    pagination_class = None
 
 
 class DisorderDetailAPIView(generics.RetrieveAPIView):
-    queryset = Disorder.objects.all()
+    queryset = Disorder.objects.prefetch_related('exercises').all()
     serializer_class = DisorderDetailSerializer
