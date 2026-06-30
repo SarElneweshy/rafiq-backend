@@ -175,7 +175,7 @@ EMAIL_HOST_USER = "rafiqspprt@gmail.com"
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")       
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-FRONTEND_URL = "Rafiq-backend-env-2.eba-meb9bypv.eu-north-1.elasticbeanstalk.com"
+FRONTEND_URL = "rafiqo.eu-north-1.elasticbeanstalk.com"
 
 # AI_SERVICE_URL = "http://emotion_model:5000/predict"
 
