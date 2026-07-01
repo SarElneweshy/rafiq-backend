@@ -12,5 +12,5 @@ class DisorderListAPIView(generics.ListAPIView):
 
 
 class DisorderDetailAPIView(generics.RetrieveAPIView):
-    queryset = Disorder.objects.prefetch_related('exercises').all()
+    queryset = Disorder.objects.all()
     serializer_class = DisorderDetailSerializer

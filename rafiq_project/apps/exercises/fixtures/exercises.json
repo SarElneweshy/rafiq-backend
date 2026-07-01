@@ -1,0 +1,134 @@
+[
+  {
+    "model": "exercises.exercise",
+    "pk": 1,
+    "fields": {
+      "disorder": 1,
+      "title": "Magor Depressive Disorder",
+      "short_desc": "Write a short note to your future self, reminding them that healing takes time.",
+      "detailed_desc": "Write to your future self: Take a note and write a short message to yourself 3 or 6 months from now — remind yourself that healing takes time and small steps count.\nDeep breathing: Sit quietly, take 5 slow breaths. Inhale for 3 counts, exhale slowly.",
+      "video_url": "https://www.youtube.com/watch?v=inpok4MKVLM"
+    }
+  },
+  {
+    "model": "exercises.exercise",
+    "pk": 2,
+    "fields": {
+      "disorder": 2,
+      "title": "Autism Spectrum Disorder",
+      "short_desc": "Spend two minutes organizing around you; order can make your mind feel safe.",
+      "detailed_desc": "Organize a small area: Spend 2 minutes arranging something simple like your desk or a small shelf — structure helps calm sensory overload\nCalming sounds: Listen to gentle, slow music or nature sounds while sitting quietly.",
+      "video_url": "https://youtu.be/4Talws29mys?si=Ec6dniPHrLkXwwkK"
+    }
+  },
+  {
+    "model": "exercises.exercise",
+    "pk": 3,
+    "fields": {
+      "disorder": 3,
+      "title": "Loneliness",
+      "short_desc": "Listen to a song that makes you feel connected or brings good memories.",
+      "detailed_desc": "Send a kind message: Text someone you care about — “I thought of you today.” Simple connection helps reduce loneliness.\nJournal your feelings: Write “I feel…” and “I wish…” — express your emotions without judging them.",
+      "video_url": "https://youtu.be/GckT5n9Ik1s"
+    }
+  },
+  {
+    "model": "exercises.exercise",
+    "pk": 4,
+    "fields": {
+      "disorder": 4,
+      "title": "Bipolar Disorder",
+      "short_desc": "Draw or color something that matches how your mood feels right now.",
+      "detailed_desc": "Mood tracking: Write “Mood right now:” and “Energy level:” — this helps notice mood patterns.\nShort walk or stretching: Move your body gently to release stress and regulate emotions.",
+      "video_url": "https://www.youtube.com/watch?v=inpok4MKVLM"
+    }
+  },
+  {
+    "model": "exercises.exercise",
+    "pk": 5,
+    "fields": {
+      "disorder": 5,
+      "title": "Anxiety",
+      "short_desc": "Hold something small in your hand and describe it in detail — focus on its texture, color, and shape.",
+      "detailed_desc": "5-4-3-2-1 grounding: Name 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste — brings you back to the present moment.\nBox breathing: Inhale 4 counts, hold 4, exhale 4 — repeat for a minute.",
+      "video_url": "https://youtu.be/SNqYG95j_UQ"
+    }
+  },
+  {
+    "model": "exercises.exercise",
+    "pk": 6,
+    "fields": {
+      "disorder": 6,
+      "title": "PTSD",
+      "short_desc": "Wrap yourself in a blanket or hug a pillow — remind your body it’s safe now.",
+      "detailed_desc": "Name 3 safe things: Look around and identify “something safe I see,” “something safe I can touch,” “something safe I hear.”\nNature sounds: Play calming sounds (waves, rain, forest) for 2–3 minutes — focus only on the sound.",
+      "video_url": "https://www.youtube.com/watch?v=VDLfVwMSbJ8"
+    }
+  },
+  {
+    "model": "exercises.exercise",
+    "pk": 7,
+    "fields": {
+      "disorder": 7,
+      "title": "Sleeping Disorder",
+      "short_desc": "Write down three thoughts from your mind before bed to clear your head.",
+      "detailed_desc": "No screens before bed: Turn off screens 15 minutes before sleeping and lower the lights.\nBedtime relaxation: Lie down, breathe slowly, and listen to soft sounds or a sleep meditation.",
+      "video_url": "https://www.youtube.com/watch?v=ywTaRqSbQpw"
+    }
+  },
+  {
+    "model": "exercises.exercise",
+    "pk": 8,
+    "fields": {
+      "disorder": 8,
+      "title": "Psychotic Depression",
+      "short_desc": "Say out loud one sentence that keeps you grounded in reality, like “I’m safe in my room right now”.",
+      "detailed_desc": "Reality check list: Write two lines — “This is real:” and “This is just a thought:” — helps you separate facts from mental noise.\nGround through touch: Hold a chair or feel the floor — focus on physical sensation.",
+      "video_url": "https://www.youtube.com/watch?v=qKcRUOWYQ9w"
+    }
+  },
+  {
+    "model": "exercises.exercise",
+    "pk": 9,
+    "fields": {
+      "disorder": 9,
+      "title": "Eating Disorder",
+      "short_desc": "Before your next meal, take one deep breath and thank your body for supporting you.",
+      "detailed_desc": "Mindful gratitude: Before eating, pause and say “I thank my body for working today.\nSlow eating: Focus on the taste, smell, and texture of each bite — without judgment.",
+      "video_url": "https://www.youtube.com/watch?v=LiUnFJ8P4gM"
+    }
+  },
+  {
+    "model": "exercises.exercise",
+    "pk": 10,
+    "fields": {
+      "disorder": 10,
+      "title": "ADHD",
+      "short_desc": "Pick one simple task and set a fun 5-minute timer — focus until it ends.",
+      "detailed_desc": "10-minute timer: Set a timer for 10 minutes and focus on one small task only.\nTop 3 goals: Write three things you want to achieve today \n — keeps your focus structured",
+      "video_url": "https://www.youtube.com/watch?v=rTIv5X8Bo1w"
+    }
+  },
+  {
+    "model": "exercises.exercise",
+    "pk": 11,
+    "fields": {
+      "disorder": 11,
+      "title": "PDD",
+      "short_desc": "Stand near a window and notice one thing that looks alive — light, a tree, or movement.",
+      "detailed_desc":"Move your body: Stretch or walk for 2 minutes to activate energy.\nSet one tiny goal: “Drink an extra glass of water” or “Read one page” — celebrate completing it.",
+      "video_url": "https://www.youtube.com/watch?v=LiUnFJ8P4gM"
+    }
+  },
+  {
+    "model": "exercises.exercise",
+    "pk": 12,
+    "fields": {
+      "disorder": 12,
+      "title": "OCD",
+      "short_desc": "When the urge comes, gently tap your fingers five times instead — remind yourself you’re in control.",
+      "detailed_desc": "Delay the urge: When you feel a compulsion, breathe slowly for 2 minutes before acting.\n Focus on one sound: Pick a soft noise (fan, clock, or music) and listen to it carefully for a few minutes. ",
+      "video_url": "https://www.youtube.com/watch?v=pxWOpGm4d7U"
+    }
+  }
+]

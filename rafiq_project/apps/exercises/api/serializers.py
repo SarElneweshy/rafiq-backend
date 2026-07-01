@@ -10,26 +10,17 @@ class DisorderListSerializer(serializers.ModelSerializer):
 
 #second page serializer
 class ExerciseSerializer(serializers.ModelSerializer):
-    detailed_exercises_list = serializers.SerializerMethodField()
-
     class Meta:
         model = Exercise
-        fields = ['id', 'title', 'short_desc', 'detailed_exercises_list', 'video_url']
-
-    def get_detailed_exercises_list(self, obj):
-        if obj.detailed_desc:
-            return [line.strip() for line in obj.detailed_desc.split('\n') if line.strip()]
-        return []
+        fields = ['id', 'title', 'short_desc', 'detailed_desc', 'video_url']
 
 class DisorderDetailSerializer(serializers.ModelSerializer):
-    exercises = ExerciseSerializer(many=True, read_only=True)
+    exercises = ExerciseSerializer(many=True)
 
     class Meta:
         model = Disorder
         fields = [
+            'id',
+            'short_name',
             'exercises'
         ]
-
-
-
-

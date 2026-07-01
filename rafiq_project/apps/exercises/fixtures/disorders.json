@@ -1,0 +1,98 @@
+[
+  {
+    "model": "exercises.disorder",
+    "pk": 1,
+    "fields": {
+      "short_name": "MDD",
+      "full_name": "Major Depressive Disorder"
+    }
+  },
+  {
+    "model": "exercises.disorder",
+    "pk": 2,
+    "fields": {
+      "short_name": "ASD",
+      "full_name": "Autism Spectrum Disorder"
+    }
+  },
+  {
+    "model": "exercises.disorder",
+    "pk": 3,
+    "fields": {
+      "short_name": "Loneliness",
+      "full_name": "Loneliness"
+    }
+  },
+  {
+    "model": "exercises.disorder",
+    "pk": 4,
+    "fields": {
+      "short_name": "Bipolar",
+      "full_name": "Bipolar Disorder"
+    }
+  },
+  {
+    "model": "exercises.disorder",
+    "pk": 5,
+    "fields": {
+      "short_name": "Anxiety",
+      "full_name": "Anxiety"
+    }
+  },
+  {
+    "model": "exercises.disorder",
+    "pk": 6,
+    "fields": {
+      "short_name": "PTSD",
+      "full_name": "Post-Traumatic Stress Disorder"
+    }
+  },
+  {
+    "model": "exercises.disorder",
+    "pk": 7,
+    "fields": {
+      "short_name": "Sleeping",
+      "full_name": "Sleeping Disorder"
+    }
+  },
+  {
+    "model": "exercises.disorder",
+    "pk": 8,
+    "fields": {
+      "short_name": "Psychotic",
+      "full_name": "Psychotic Depression"
+    }
+  },
+  {
+    "model": "exercises.disorder",
+    "pk": 9,
+    "fields": {
+      "short_name": "Eating",
+      "full_name": "Eating Disorder"
+    }
+  },
+  {
+    "model": "exercises.disorder",
+    "pk": 10,
+    "fields": {
+      "short_name": "ADHD",
+      "full_name": "Attention-Deficit/Hyperactivity Disorder"
+    }
+  },
+  {
+    "model": "exercises.disorder",
+    "pk": 11,
+    "fields": {
+      "short_name": "PDD",
+      "full_name": "Persistent Depressive Disorder"
+    }
+  },
+  {
+    "model": "exercises.disorder",
+    "pk": 12,
+    "fields": {
+      "short_name": "OCD",
+      "full_name": "Obsessive-Compulsive Disorder"
+    }
+  }
+]
