@@ -23,7 +23,7 @@ class DepressionTestApiView(APIView):
             try:
                 saved_result = DepressionTestResult.objects.create(
                     user=request.user,
-                  depression=result.get("depression", "Unknown"),                   description=result.get("description", ""),
+                  depression=result.get("depression", "Unknown"),description=result.get("description", ""),
                     answers=validated_data
                 )
                 shared_url = f"https://rafiq-mentalhealth.com/share/depression/{saved_result.id}/"
