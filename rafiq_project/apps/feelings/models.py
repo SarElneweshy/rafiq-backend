@@ -9,7 +9,17 @@ class Feeling(models.Model):
         SAD = 'sad', 'Sad'
         TIRED = 'tired', 'Tired'
         SCARED = 'scared', 'Scared'
+        SURPRISE = 'surprise', 'Surprise'
+        LOVE = 'love', 'Love'
         ANGRY = 'angry', 'Angry'
+        NERVOUS = 'nervous', 'Nervous'
+        SHY = 'shy', 'Shy'
+        EXCITED = 'excited', 'Excited'
+        BORED = 'bored', 'Bored'
+        SILLY = 'silly', 'Silly'
+        WORRIED = 'worried', 'Worried'
+        SICK = 'sick', 'Sick'
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='feelings')
     emotion = models.CharField(max_length=16, choices=EmotionChoices.choices)
     reason = models.TextField(blank=True)
