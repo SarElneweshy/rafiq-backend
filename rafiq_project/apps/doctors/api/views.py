@@ -5,6 +5,7 @@ from rest_framework.exceptions import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
 from apps.doctors.models import Doctor
 from .serializers import DoctorListSerializer, DoctorDetailSerializer
+from .filters import DoctorFilter
 
 
 # List view with filtering, searching, ordering, and disclaimer in the response
@@ -24,18 +25,49 @@ class DoctorListView(generics.ListAPIView):
 
     filter_backends = [
         DjangoFilterBackend,
-        filters.SearchFilter,
         filters.OrderingFilter 
     ]
 
-    filterset_fields = ['city', 'area']
-    search_fields = ['name', 'sub_specialty', 'area']
+    filterset_class = DoctorFilter
+    search_fields = ['name']
     ordering_fields = ['rating', 'price', 'reviews_count']
     ordering = ['-rating', '-reviews_count']
 
+    ALLOWED_PARAMS = {'city', 'area', 'name', 'ordering','page', 'min_rating'}
+    @property
+    def allowed_ordering(self):
+        return sorted(set(self.ordering_fields) | {
+            f"-{field}" for field in self.ordering_fields
+        })
+    
+    def initial(self, request, *args, **kwargs):
+        super().initial(request, *args, **kwargs)
+        # Check for unknown query parameters
+        unknown_params = (set(request.query_params.keys()) - self.ALLOWED_PARAMS)
+        if unknown_params:
+             raise ValidationError({
+                "detail": (
+                    "Unknown query parameter(s): "
+                    f"{', '.join(sorted(unknown_params))}"
+                )
+            })
+        #  validate ordering parameter
+        ordering_param = request.query_params.get('ordering')
+        if ordering_param is not None:
+            ordering_param = ordering_param.strip()
+            if ordering_param == "":
+                raise ValidationError({
+                    'ordering': 'Ordering parameter cannot be empty.'
+                })
+            if ordering_param not in self.allowed_ordering:
+                raise ValidationError({
+                    'ordering': f'Invalid ordering parameter: {ordering_param}. Allowed values are: {", ".join(self.allowed_ordering)}'
+                })
+
     def get_queryset(self):
         return Doctor.objects.filter(is_active=True)
-
+       
+        
  # Detail view with disclaimer added to the response
 class DoctorDetailView(generics.RetrieveAPIView):
     serializer_class = DoctorDetailSerializer
