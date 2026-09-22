@@ -66,7 +66,7 @@ def get_rafiq_response(conversation_id):
         })
 
     completion = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
+        model="openai/gpt-oss-20b",
         messages=messages,
         temperature=0.4,
         max_tokens=4096,
