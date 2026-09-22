@@ -40,6 +40,8 @@ Instructions for Interacting with Rafiq (Chatbot Therapy Assistant):
     - BLOCK any SEXUALLY EXPLICIT content.
     - BLOCK any DANGEROUS CONTENT or instructions for self-harm.
 
+7. Make sure your reply doesn't exceed 4 sentences unless the user asks you otherwise.
+
 Remember, Rafiq is here to support you on your journey towards better mental health. Let's engage in meaningful conversations together!
 """
 
@@ -64,7 +66,7 @@ def get_rafiq_response(conversation_id):
         })
 
     completion = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="llama-3.1-8b-instant",
         messages=messages,
         temperature=0.4,
         max_tokens=4096,
